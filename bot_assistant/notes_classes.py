@@ -1,7 +1,6 @@
 from collections import UserDict
 from datetime import datetime
 import pickle
-from abc import ABC, abstractmethod
 
 
 DATE_FORMAT = "%d.%m.%Y"
@@ -16,45 +15,11 @@ TEXT_COLOR = {
 }
 
 
-class NoteAbstract(ABC):
-    @abstractmethod
-    def edit_title(self, title):
-        pass
-
-    @abstractmethod
-    def edit_body(self, body):
-        pass
-
-    @abstractmethod
-    def add_tags(self, *tags):
-        pass
-
-    @abstractmethod
-    def remove_tags(self, tag):
-        pass
-
-    @abstractmethod
-    def remove_all_tags(self):
-        pass
-
-    @abstractmethod
-    def mark_done(self):
-        pass
-
-    @abstractmethod
-    def unmark_done(self):
-        pass
-
-    @abstractmethod
-    def get_date_modified(self):
-        pass
-
-
 class IdError(Exception):
     pass
 
 
-class Note(NoteAbstract):
+class Note():
     def __init__(self, title, body, *tags):
         self.date_created = datetime.now()
         self.date_modified = self.date_created
@@ -126,39 +91,9 @@ class Tag:
 
     def __str__(self):
         return f"#{self.tag}"
-    
-
-class NotesAbstract(ABC):
-    @abstractmethod
-    def add_note(self, note: Note):
-        pass
-    
-    @abstractmethod
-    def edit_note(self, id, title=None, body=None, adding_tags=None, removing_tags=None, flag_clear_tags=False):
-        pass
-
-    @abstractmethod
-    def remove_note(self, id):
-        pass
-
-    @abstractmethod
-    def show_notes(self, text=None):
-        pass
-
-    @abstractmethod
-    def search_and_sort_by_tags(self, tags):
-        pass
-
-    @abstractmethod
-    def load_from_file(self, file):
-        pass
-
-    @abstractmethod
-    def save_to_file(self, file):
-        pass
 
 
-class Notes(UserDict, NotesAbstract):
+class Notes(UserDict):
     def add_note(self, note: Note):
         id = 0
         while True:
