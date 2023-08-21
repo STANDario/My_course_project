@@ -15,7 +15,7 @@ This guide will take you through the steps to set up and run the project on your
 Steps to install the project:
 
 1. Clone the repository: https://github.com/STANDario/My_course_project.git
-2. Go to the project directory: `cd Course_project`
+2. Go to the project directory: `cd My_course_project`
 3. Copy file `bot_assistant-0.1.0-py3-none-any.whl` from `dist` directory
 4. Run the command to install the package: `pip install bot_assistant-0.1.0-py3-none-any.whl`
 
