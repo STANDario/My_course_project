@@ -2,7 +2,6 @@ import pickle
 import re
 from collections import UserDict
 from datetime import datetime
-from abc import ABC, abstractmethod
 
 
 TEXT_COLOR = {
@@ -68,13 +67,7 @@ class Field:
             self.value = address
 
 
-class PersonAbstract(ABC):
-    @abstractmethod
-    def value(self, value):
-        pass
-
-
-class Birthday(Field, PersonAbstract):
+class Birthday(Field):
     @property
     def value(self):
         if self.__value:
@@ -94,7 +87,7 @@ class Birthday(Field, PersonAbstract):
             raise BirthdayError
 
 
-class Phone(Field, PersonAbstract):
+class Phone(Field):
     @property
     def value(self):
         if self.__value:
@@ -119,7 +112,7 @@ class Phone(Field, PersonAbstract):
             raise PhoneError
 
 
-class Email(Field, PersonAbstract):
+class Email(Field):
     @property
     def value(self):
         if self.__value:
@@ -140,7 +133,7 @@ class Name(Field):
     pass
 
 
-class Address(Field, PersonAbstract):
+class Address(Field):
     @property
     def value(self):
         if self.__value:
@@ -173,61 +166,7 @@ class Address(Field, PersonAbstract):
             pass
 
 
-class RecordAbstract(ABC):
-    @abstractmethod
-    def add_phone(self, extra_phone, flag=True):
-        pass
-
-    @abstractmethod
-    def change_phone(self, some_phone, different_phone):
-        pass
-
-    @abstractmethod
-    def delete_phone(self, some_phone):
-        pass
-
-    @abstractmethod
-    def add_email(self, extra_email):
-        pass
-
-    @abstractmethod
-    def change_email(self, some_email, different_email):
-        pass
-
-    @abstractmethod
-    def delete_email(self, some_email):
-        pass
-
-    @abstractmethod
-    def days_to_birthday(self):
-        pass
-
-    @abstractmethod
-    def add_birthday(self, extra_birthday):
-        pass
-
-    @abstractmethod
-    def change_birthday(self, some_bd, different_bd):
-        pass
-
-    @abstractmethod
-    def delete_birthday(self, some_bd):
-        pass
-
-    @abstractmethod
-    def add_address(self, new_address):
-        pass
-
-    @abstractmethod
-    def change_address(self, new_address):
-        pass
-
-    @abstractmethod
-    def delete_address(self, new_address):
-        pass
-
-
-class Record(RecordAbstract):
+class Record():
     def __init__(self, person_name, phone_num=None, email=None, birthday=None, address=None, ab=None):
         self.ab = ab
         self.name = person_name
@@ -442,35 +381,9 @@ class Record(RecordAbstract):
             pass 
 
         return result
-    
-
-class AddressBookAbstract(ABC):
-    @abstractmethod
-    def add_record(self, record):
-        pass
-
-    @abstractmethod
-    def delete_record(self, name_to_delete):
-        pass
-
-    @abstractmethod
-    def clear_data(self):
-        pass
-
-    @abstractmethod
-    def find_contact(self, inp):
-        pass
-
-    @abstractmethod
-    def load_from_file(self, file):
-        pass
-
-    @abstractmethod
-    def save_to_file(self, file):
-        pass
 
 
-class AddressBook(UserDict, AddressBookAbstract):
+class AddressBook(UserDict):
     def add_record(self, record):
         try:
             self.data[record.name.value] = record
