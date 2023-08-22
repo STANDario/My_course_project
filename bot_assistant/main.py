@@ -1,7 +1,9 @@
-from .address_book_main import address_book_main_func
-from .notes_main import notes_main_func
+from .address_book_main import address_book_main_func, addressbook_hello
+from .notes_main import notes_main_func, notes_hello
 from .sort_main import sort_main_func
 from rich import print as rprint
+from abc import ABC, abstractmethod
+
 
 TEXT_COLOR = {
     "red": "\033[31m",
@@ -9,21 +11,76 @@ TEXT_COLOR = {
     "reset": "\033[0m"
 }
 
+
+class CommandsOutputAbstract(ABC):
+    @abstractmethod
+    def hello(self):
+        ...
+
+    @abstractmethod
+    def output(self):
+        ...
+
+
+class HelloABC(CommandsOutputAbstract):
+    def hello(self):
+        print("\nHi, I'm your personal helper!")
+
+    def output(self):
+        rprint("\nYou can run: \n-'addressbook'\n-'notebook' \n-'sorting_files *path*'\n\nOr close your personal helper by 'close' or 'exit'")
+        choose_program_inp = input('\nChoose the program >>> ')
+        return choose_program_inp
+    
+
+class NotesABC(CommandsOutputAbstract):
+    def hello(self):
+        notes_hello()
+
+    def output(self):
+        notes_main_func()
+
+
+class AddressBookABC(CommandsOutputAbstract):
+    def hello(self):
+        addressbook_hello()
+
+    def output(self):
+        address_book_main_func()
+
+
+class CommandsHandler:
+    def __init__(self, command: CommandsOutputAbstract):
+        self.output_message = command
+
+    def greeting(self):
+        self.output_message.hello()
+
+    def send_message(self):
+        x = self.output_message.output()
+        return x
+
+
 def main_func():
-    print("\nHi, I'm your personal helper!")
+    first_command_output = HelloABC()
+
+    command_output_hello = CommandsHandler(first_command_output)
+    command_output_hello.greeting()
 
     while True:
-        rprint("\nYou can run: \n-'addressbook'\n-'notebook' \n-'sorting_files *path*'\n\nOr close your personal helper by 'close' or 'exit'")
-
-        choose_program_inp = input('\nChoose the program >>> ')
-
+        choose_program_inp = command_output_hello.send_message()
         input_split_list = choose_program_inp.split(' ')
 
         if choose_program_inp == 'addressbook':
-            address_book_main_func()
+            address_book = AddressBookABC()
+            command_output_addressbook = CommandsHandler(address_book)
+            command_output_addressbook.greeting()
+            command_output_addressbook.send_message()
         
         elif choose_program_inp == 'notebook':
-            notes_main_func()
+            notes = NotesABC()
+            command_output_notes = CommandsHandler(notes)
+            command_output_notes.greeting()
+            command_output_notes.send_message()
 
         elif input_split_list[0] == 'sorting_files':
             try:
@@ -44,6 +101,7 @@ def main_func():
         
         else:
             print(TEXT_COLOR['red'] + 'Incorrect command!'+ TEXT_COLOR['reset'])
+
 
 if __name__ == "__main__":
     main_func()

@@ -303,11 +303,15 @@ def get_file_path(file_name):
     return file_path
 
 
+def notes_hello():
+    rprint("\nInput 'commands' to see all the commands avalible!\n")
+
+
 def notes_main_func():
     global notes
+
     file_path = get_file_path("notes.bin")
     notes.load_from_file(file_path)
-    rprint("\nInput 'commands' to see all the commands avalible!\n")
 
     while True:
 
