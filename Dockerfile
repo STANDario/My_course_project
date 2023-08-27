@@ -2,7 +2,7 @@
 FROM python:3.11
 
 # Встановимо робочу директорію всередині контейнера
-WORKDIR /app
+WORKDIR /My_course_project
 
 # Скопіюємо інші файли в робочу директорію контейнера
 COPY . .
@@ -16,4 +16,4 @@ RUN pip install dist/bot_assistant-0.1.0-py3-none-any.whl
 EXPOSE 5000
 
 # Запустимо наш застосунок всередині контейнера. Це точка входу.
-ENTRYPOINT ["bot-assistant"]
+ENTRYPOINT ["python", "bot_assistant/main.py"]
