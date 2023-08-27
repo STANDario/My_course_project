@@ -2,7 +2,7 @@ import os
 import pathlib
 from platformdirs import user_data_dir
 from rich import print as rprint
-from .notes_classes import Tag, Note, Notes, IdError
+from notes_classes import Tag, Note, Notes, IdError
 
 
 TEXT_COLOR = {

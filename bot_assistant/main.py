@@ -1,6 +1,6 @@
-from .address_book_main import address_book_main_func, addressbook_hello
-from .notes_main import notes_main_func, notes_hello
-from .sort_main import sort_main_func
+from address_book_main import address_book_main_func, addressbook_hello
+from notes_main import notes_main_func, notes_hello
+from sort_main import sort_main_func
 from rich import print as rprint
 from abc import ABC, abstractmethod
 
